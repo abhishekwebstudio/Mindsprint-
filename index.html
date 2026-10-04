@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MindSprint - Free Brain Games</title>
+<meta name="description" content="Play free brain games online including Sudoku, 2048, Memory Cards, Arrow Puzzle and Number Sequence.">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f5f7ff;
+    color:#172033;
+}
+
+/* NAVBAR */
+
+nav{
+    background:#ffffff;
+    border-bottom:1px solid #e8eaf2;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.navbar{
+    max-width:1200px;
+    margin:auto;
+    padding:16px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    text-decoration:none;
+    color:#3157d5;
+    font-size:25px;
+    font-weight:800;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#172033;
+    font-weight:600;
+}
+
+/* HERO */
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:80px 24px 55px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:50px;
+    align-items:center;
+}
+
+.hero-text h1{
+    font-size:clamp(42px,6vw,70px);
+    line-height:1.05;
+    margin-bottom:20px;
+}
+
+.hero-text h1 span{
+    color:#3157d5;
+}
+
+.hero-text p{
+    max-width:620px;
+    color:#667085;
+    font-size:19px;
+    line-height:1.7;
+}
+
+.hero-btn{
+    display:inline-block;
+    margin-top:28px;
+    padding:14px 25px;
+    background:#3157d5;
+    color:white;
+    text-decoration:none;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.hero-box{
+    background:white;
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 15px 45px rgba(49,87,213,.12);
+    text-align:center;
+}
+
+.brain{
+    font-size:90px;
+    margin-bottom:15px;
+}
+
+.hero-box h3{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.hero-box p{
+    color:#667085;
+    line-height:1.6;
+}
+
+/* STATS */
+
+.stats{
+    max-width:1000px;
+    margin:10px auto 65px;
+    padding:0 24px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.stat{
+    background:white;
+    border:1px solid #e8eaf2;
+    border-radius:14px;
+    padding:22px;
+    text-align:center;
+}
+
+.stat b{
+    display:block;
+    color:#3157d5;
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+/* GAMES */
+
+.games-section{
+    background:white;
+    padding:70px 24px;
+}
+
+.games-container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-heading h2{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.section-heading p{
+    color:#667085;
+}
+
+.games{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.game{
+    border:1px solid #e5e7ef;
+    border-radius:18px;
+    padding:28px;
+    background:#fff;
+    transition:.2s;
+}
+
+.game:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.game-icon{
+    width:58px;
+    height:58px;
+    border-radius:15px;
+    background:#eef2ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    margin-bottom:20px;
+}
+
+.game h3{
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.game p{
+    color:#667085;
+    line-height:1.6;
+    min-height:52px;
+}
+
+.play{
+    display:inline-block;
+    margin-top:20px;
+    padding:11px 18px;
+    background:#3157d5;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* ABOUT */
+
+.about{
+    padding:75px 24px;
+    text-align:center;
+}
+
+.about-content{
+    max-width:750px;
+    margin:auto;
+}
+
+.about h2{
+    font-size:38px;
+    margin-bottom:18px;
+}
+
+.about p{
+    color:#667085;
+    line-height:1.7;
+    margin-bottom:10px;
+}
+
+.about .hero-btn{
+    margin-top:20px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#172033;
+    color:#cbd2e1;
+    text-align:center;
+    padding:35px 20px;
+    line-height:2;
+}
+
+footer a{
+    color:white;
+    text-decoration:none;
+    margin:0 9px;
+}
+
+/* TABLET */
+
+@media(max-width:900px){
+
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .hero-text p{
+        margin:auto;
+    }
+
+    .hero-box{
+        max-width:500px;
+        width:100%;
+        margin:auto;
+    }
+
+    .games{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+/* PHONE */
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:14px 18px;
+    }
+
+    .logo{
+        font-size:22px;
+    }
+
+    .nav-links{
+        gap:12px;
+    }
+
+    .nav-links a{
+        font-size:14px;
+    }
+
+    .hero{
+        padding:55px 18px 40px;
+        gap:35px;
+    }
+
+    .hero-text h1{
+        font-size:42px;
+    }
+
+    .hero-text p{
+        font-size:16px;
+    }
+
+    .hero-box{
+        padding:28px 20px;
+    }
+
+    .brain{
+        font-size:70px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+        margin-bottom:40px;
+    }
+
+    .games-section{
+        padding:55px 18px;
+    }
+
+    .section-heading h2{
+        font-size:30px;
+    }
+
+    .games{
+        grid-template-columns:1fr;
+    }
+
+    .game{
+        padding:24px;
+    }
+
+    .game p{
+        min-height:auto;
+    }
+
+    .about{
+        padding:55px 20px;
+    }
+
+    .about h2{
+        font-size:30px;
+    }
+
+    footer a{
+        display:inline-block;
+        margin:0 5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="navbar">
+
+        <a class="logo" href="index.html">
+            MindSprint
+        </a>
+
+        <div class="nav-links">
+            <a href="#games">Games</a>
+            <a href="about.html">About</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<section class="hero">
+
+    <div class="hero-text">
+
+        <h1>
+            Train Your <span>Brain.</span>
+        </h1>
+
+        <p>
+            Challenge yourself with fun and free brain games.
+            Improve your logic, memory, concentration and
+            problem-solving skills.
+        </p>
+
+        <a class="hero-btn" href="#games">
+            Explore Games
+        </a>
+
+    </div>
+
+    <div class="hero-box">
+
+        <div class="brain">🧠</div>
+
+        <h3>Ready for a Challenge?</h3>
+
+        <p>
+            Pick a game and give your brain a quick workout.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="stats">
+
+    <div class="stat">
+        <b>5+</b>
+        Free Games
+    </div>
+
+    <div class="stat">
+        <b>100%</b>
+        Free
+    </div>
+
+    <div class="stat">
+        <b>24/7</b>
+        Play Anytime
+    </div>
+
+</section>
+
+
+<section class="games-section" id="games">
+
+    <div class="games-container">
+
+        <div class="section-heading">
+
+            <h2>Choose Your Game</h2>
+
+            <p>
+                Pick a challenge and start playing.
+            </p>
+
+        </div>
+
+
+        <div class="games">
+
+
+            <div class="game">
+
+                <div class="game-icon">🧩</div>
+
+                <h3>Sudoku</h3>
+
+                <p>
+                    Solve the number puzzle and test your logical thinking.
+                </p>
+
+                <a class="play" href="sudoku.html">
+                    Play Sudoku
+                </a>
+
+            </div>
+
+
+            <div class="game">
+
+                <div class="game-icon">🔢</div>
+
+                <h3>2048</h3>
+
+                <p>
+                    Combine numbers and try to reach the 2048 tile.
+                </p>
+
+                <a class="play" href="2048.html">
+                    Play 2048
+                </a>
+
+            </div>
+
+
+            <div class="game">
+
+                <div class="game-icon">🧠</div>
+
+                <h3>Memory Cards</h3>
+
+                <p>
+                    Find matching pairs and test your memory.
+                </p>
+
+                <a class="play" href="memory.html">
+                    Play Memory
+                </a>
+
+            </div>
+
+
+            <div class="game">
+
+                <div class="game-icon">➡️</div>
+
+                <h3>Arrow Puzzle</h3>
+
+                <p>
+                    Choose the correct direction and build your streak.
+                </p>
+
+                <a class="play" href="arrow-puzzle.html">
+                    Play Arrow Puzzle
+                </a>
+
+            </div>
+
+
+            <div class="game">
+
+                <div class="game-icon">🔢</div>
+
+                <h3>Number Sequence</h3>
+
+                <p>
+                    Find the missing number and challenge your brain.
+                </p>
+
+                <a class="play" href="number-sequence.html">
+                    Play Sequence
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about">
+
+    <div class="about-content">
+
+        <h2>About MindSprint</h2>
+
+        <p>
+            MindSprint is a free brain-game website created
+            for people who enjoy puzzles and mental challenges.
+        </p>
+
+        <p>
+            Play Sudoku, 2048, Memory Cards, Arrow Puzzle
+            and Number Sequence whenever you want.
+        </p>
+
+        <a class="hero-btn" href="about.html">
+            Learn More
+        </a>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    © 2026 MindSprint
+
+    <br>
+
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="contact.html">Contact</a>
+
+</footer>
+
+</body>
+</html>

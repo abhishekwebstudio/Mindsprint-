@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Number Sequence | MindSprint</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f7ff;
+color:#172033;
+text-align:center;
+}
+
+nav{
+background:white;
+padding:16px;
+box-shadow:0 2px 10px #ddd;
+}
+
+nav a{
+text-decoration:none;
+font-size:22px;
+font-weight:bold;
+color:#3157d5;
+}
+
+.container{
+max-width:500px;
+margin:25px auto;
+padding:15px;
+}
+
+.info{
+display:flex;
+justify-content:space-around;
+margin:20px 0;
+}
+
+.box{
+background:white;
+padding:10px 18px;
+border-radius:8px;
+}
+
+#sequence{
+background:white;
+padding:25px 10px;
+border-radius:12px;
+font-size:30px;
+font-weight:bold;
+margin:25px auto;
+box-shadow:0 3px 15px #ddd;
+word-break:break-word;
+}
+
+input{
+width:100%;
+padding:14px;
+font-size:18px;
+border:1px solid #ccc;
+border-radius:8px;
+text-align:center;
+}
+
+button{
+margin:12px 5px;
+padding:11px 18px;
+border:0;
+border-radius:7px;
+background:#3157d5;
+color:white;
+cursor:pointer;
+}
+
+#message{
+min-height:25px;
+font-weight:bold;
+margin:10px;
+}
+
+.home{
+display:inline-block;
+margin-top:10px;
+padding:10px 18px;
+background:#172033;
+color:white;
+text-decoration:none;
+border-radius:7px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">MindSprint</a>
+</nav>
+
+<div class="container">
+
+<h1>Number Sequence</h1>
+
+<p>Find the next number in the sequence.</p>
+
+<div class="info">
+
+<div class="box">
+Level<br>
+<b id="level">1</b>
+</div>
+
+<div class="box">
+Score<br>
+<b id="score">0</b>
+</div>
+
+<div class="box">
+Streak<br>
+<b id="streak">0</b>
+</div>
+
+</div>
+
+<div id="sequence">2, 4, 6, ?</div>
+
+<input
+id="answer"
+type="number"
+placeholder="Enter next number"
+>
+
+<br>
+
+<button onclick="submitAnswer()">Submit</button>
+<button onclick="skip()">Skip</button>
+<button onclick="newGame()">New Game</button>
+
+<div id="message"></div>
+
+<a class="home" href="index.html">
+← Back to MindSprint
+</a>
+
+</div>
+
+<script>
+
+let level=1;
+let score=0;
+let streak=0;
+
+let answer=0;
+
+function makeQuestion(){
+
+let type=Math.floor(Math.random()*4);
+
+let nums=[];
+
+if(type===0){
+
+let start=Math.floor(Math.random()*10)+1;
+let gap=Math.floor(Math.random()*8)+2;
+
+for(let i=0;i<4;i++){
+nums.push(start+i*gap);
+}
+
+answer=start+4*gap;
+
+}
+
+else if(type===1){
+
+let start=Math.floor(Math.random()*5)+1;
+let gap=Math.floor(Math.random()*5)+1;
+
+for(let i=0;i<4;i++){
+nums.push(start*Math.pow(gap+1,i));
+}
+
+answer=start*Math.pow(gap+1,4);
+
+}
+
+else if(type===2){
+
+let start=Math.floor(Math.random()*10)+1;
+
+for(let i=0;i<4;i++){
+nums.push(start+i*i);
+}
+
+answer=start+16;
+
+}
+
+else{
+
+let start=Math.floor(Math.random()*20)+10;
+let gap=Math.floor(Math.random()*5)+2;
+
+for(let i=0;i<4;i++){
+nums.push(start-i*gap);
+}
+
+answer=start-4*gap;
+
+}
+
+document.getElementById("sequence").textContent=
+nums.join(", ")+" , ?";
+
+document.getElementById("answer").value="";
+
+}
+
+function submitAnswer(){
+
+let input=Number(document.getElementById("answer").value);
+
+if(document.getElementById("answer").value===""){
+return;
+}
+
+if(input===answer){
+
+score+=10;
+streak++;
+level++;
+
+document.getElementById("message").textContent=
+"✅ Correct!";
+
+}
+else{
+
+streak=0;
+
+document.getElementById("message").textContent=
+"❌ Wrong!";
+
+}
+
+update();
+
+setTimeout(makeQuestion,500);
+
+}
+
+function skip(){
+
+streak=0;
+
+document.getElementById("message").textContent=
+"Skipped!";
+
+update();
+
+makeQuestion();
+
+}
+
+function update(){
+
+document.getElementById("level").textContent=level;
+document.getElementById("score").textContent=score;
+document.getElementById("streak").textContent=streak;
+
+}
+
+function newGame(){
+
+level=1;
+score=0;
+streak=0;
+
+document.getElementById("message").textContent="";
+
+update();
+makeQuestion();
+
+}
+
+document.getElementById("answer")
+.addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+submitAnswer();
+}
+
+});
+
+newGame();
+
+</script>
+
+</body>
+</html>

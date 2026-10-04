@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Us | MindSprint</title>
+
+    <meta name="description" content="Contact MindSprint for questions, feedback, suggestions, or support.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef4ff, #f8faff);
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3157d5;
+            text-decoration: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #3157d5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 45px;
+            border-radius: 22px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #172033;
+        }
+
+        .intro {
+            text-align: center;
+            color: #667085;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .contact-box {
+            background: #f5f7ff;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3157d5;
+        }
+
+        .contact-box h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .contact-box p {
+            color: #667085;
+            line-height: 1.6;
+        }
+
+        .email {
+            display: inline-block;
+            margin-top: 10px;
+            color: #3157d5;
+            font-weight: bold;
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .email:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            padding: 13px 25px;
+            background: #3157d5;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            background: #2445b5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: #667085;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #3157d5;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 15px 5%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+
+            .container {
+                margin: 35px auto;
+            }
+
+            .card {
+                padding: 28px 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .intro {
+                font-size: 15px;
+            }
+
+            .contact-box {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">MindSprint</a>
+
+        <div>
+            <a href="index.html">Games</a>
+            <a href="about.html">About</a>
+        </div>
+    </nav>
+
+
+    <!-- Contact Section -->
+    <main class="container">
+
+        <div class="card">
+
+            <h1>Contact Us</h1>
+
+            <p class="intro">
+                Have a question, suggestion, feedback, or found an issue?
+                Feel free to contact MindSprint.
+            </p>
+
+
+            <div class="contact-box">
+
+                <h2>📧 Email</h2>
+
+                <p>
+                    You can contact us through email for any questions,
+                    feedback, suggestions, or support.
+                </p>
+
+                <a
+                    class="email"
+                    href="mailto:itsabhishekkumar97@gmail.com">
+                    itsabhishekkumar97@gmail.com
+                </a>
+
+            </div>
+
+
+            <div class="contact-box">
+
+                <h2>💡 Suggestions & Feedback</h2>
+
+                <p>
+                    We are continuously working to improve MindSprint.
+                    Your feedback and suggestions can help us make the
+                    games and overall experience better.
+                </p>
+
+            </div>
+
+
+            <div class="contact-box">
+
+                <h2>🎮 Game Issues</h2>
+
+                <p>
+                    If you experience any technical problem while playing
+                    Sudoku, 2048, Arrow Puzzle, Memory Cards, or Number
+                    Sequence, please mention the game name in your email.
+                </p>
+
+            </div>
+
+
+            <a href="index.html" class="back">
+                ← Back to MindSprint
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>© 2026 MindSprint. All rights reserved.</p>
+
+        <br>
+
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+
+    </footer>
+
+</body>
+</html>

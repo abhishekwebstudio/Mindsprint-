@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sudoku | MindSprint</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+font-family:Arial;
+margin:0;
+background:#f4f7ff;
+color:#172033;
+text-align:center
+}
+nav{
+background:white;
+padding:16px;
+box-shadow:0 2px 10px #ddd
+}
+nav a{
+text-decoration:none;
+color:#3157d5;
+font-weight:bold;
+font-size:22px
+}
+.container{
+max-width:500px;
+margin:25px auto;
+padding:15px
+}
+h1{margin-bottom:5px}
+p{color:#667085}
+
+.controls{
+display:flex;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+margin:15px
+}
+
+button,select{
+padding:10px 14px;
+border:0;
+border-radius:7px;
+cursor:pointer
+}
+
+button{
+background:#3157d5;
+color:white
+}
+
+select{
+background:white;
+border:1px solid #ccc
+}
+
+.info{
+display:flex;
+justify-content:space-around;
+background:white;
+padding:12px;
+border-radius:8px;
+margin:15px 0
+}
+
+#board{
+display:grid;
+grid-template-columns:repeat(9,1fr);
+width:min(92vw,450px);
+margin:auto;
+border:3px solid #172033
+}
+
+.cell{
+aspect-ratio:1;
+background:white;
+border:1px solid #bbb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
+cursor:pointer
+}
+
+.fixed{
+background:#e9edff;
+cursor:default
+}
+
+.selected{
+background:#cfdcff
+}
+
+.error{
+background:#ffd5d5
+}
+
+.numbers{
+display:grid;
+grid-template-columns:repeat(9,1fr);
+gap:5px;
+margin:15px auto;
+max-width:450px
+}
+
+.numbers button{
+padding:12px 0
+}
+
+#message{
+min-height:25px;
+font-weight:bold
+}
+
+.home{
+display:inline-block;
+margin-top:15px;
+padding:10px 18px;
+background:#172033;
+color:white;
+text-decoration:none;
+border-radius:7px
+}
+
+footer{
+margin-top:35px;
+padding:25px;
+color:#667085
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">MindSprint</a>
+</nav>
+
+<div class="container">
+
+<h1>Sudoku</h1>
+<p>Test your logic and complete the puzzle.</p>
+
+<div class="controls">
+
+<select id="difficulty">
+<option value="easy">Easy</option>
+<option value="medium" selected>Medium</option>
+<option value="hard">Hard</option>
+</select>
+
+<button onclick="newGame()">New Game</button>
+<button onclick="resetGame()">Reset</button>
+<button onclick="checkGame()">Check</button>
+
+</div>
+
+<div class="info">
+<span>Mistakes: <b id="mistakes">0</b>/3</span>
+<span>Time: <b id="timer">00:00</b></span>
+</div>
+
+<div id="board"></div>
+
+<div class="numbers">
+<button onclick="put(1)">1</button>
+<button onclick="put(2)">2</button>
+<button onclick="put(3)">3</button>
+<button onclick="put(4)">4</button>
+<button onclick="put(5)">5</button>
+<button onclick="put(6)">6</button>
+<button onclick="put(7)">7</button>
+<button onclick="put(8)">8</button>
+<button onclick="put(9)">9</button>
+</div>
+
+<div id="message"></div>
+
+<a class="home" href="index.html">
+← Back to MindSprint
+</a>
+
+</div>
+
+<footer>
+© 2026 MindSprint
+</footer>
+
+<script>
+
+let solution=[];
+let puzzle=[];
+let original=[];
+let selected=null;
+let mistakes=0;
+let time=0;
+let timer;
+
+function shuffle(a){
+for(let i=a.length-1;i>0;i--){
+let j=Math.floor(Math.random()*(i+1));
+[a[i],a[j]]=[a[j],a[i]];
+}
+return a;
+}
+
+function makeSolution(){
+
+let g=Array.from({length:9},()=>Array(9).fill(0));
+
+function valid(r,c,n){
+
+for(let i=0;i<9;i++){
+if(g[r][i]==n)return false;
+if(g[i][c]==n)return false;
+}
+
+let sr=Math.floor(r/3)*3;
+let sc=Math.floor(c/3)*3;
+
+for(let r2=sr;r2<sr+3;r2++)
+for(let c2=sc;c2<sc+3;c2++)
+if(g[r2][c2]==n)return false;
+
+return true;
+}
+
+function solve(){
+
+for(let r=0;r<9;r++){
+for(let c=0;c<9;c++){
+
+if(g[r][c]==0){
+
+let nums=shuffle([1,2,3,4,5,6,7,8,9]);
+
+for(let n of nums){
+
+if(valid(r,c,n)){
+g[r][c]=n;
+
+if(solve())return true;
+
+g[r][c]=0;
+}
+
+}
+
+return false;
+}
+}
+}
+
+return true;
+}
+
+solve();
+return g;
+}
+
+function newGame(){
+
+clearInterval(timer);
+
+solution=makeSolution();
+puzzle=solution.map(r=>[...r]);
+
+let difficulty=document.getElementById("difficulty").value;
+
+let remove=difficulty=="easy"?38:
+difficulty=="medium"?48:55;
+
+let cells=[];
+
+for(let r=0;r<9;r++)
+for(let c=0;c<9;c++)
+cells.push([r,c]);
+
+shuffle(cells);
+
+for(let i=0;i<remove;i++)
+puzzle[cells[i][0]][cells[i][1]]=0;
+
+original=puzzle.map(r=>[...r]);
+
+mistakes=0;
+time=0;
+selected=null;
+
+document.getElementById("mistakes").textContent=0;
+document.getElementById("message").textContent="";
+draw();
+startTimer();
+}
+
+function draw(){
+
+let board=document.getElementById("board");
+board.innerHTML="";
+
+for(let r=0;r<9;r++){
+for(let c=0;c<9;c++){
+
+let cell=document.createElement("div");
+cell.className="cell";
+
+if(puzzle[r][c]){
+cell.textContent=puzzle[r][c];
+cell.classList.add("fixed");
+}
+
+cell.onclick=()=>select(r,c);
+
+board.appendChild(cell);
+}
+}
+}
+
+function select(r,c){
+
+if(original[r][c])return;
+
+selected=[r,c];
+
+document.querySelectorAll(".cell")
+.forEach(x=>x.classList.remove("selected"));
+
+document.querySelectorAll(".cell")[r*9+c]
+.classList.add("selected");
+}
+
+function put(n){
+
+if(!selected)return;
+
+let r=selected[0];
+let c=selected[1];
+
+if(original[r][c])return;
+
+let cell=document.querySelectorAll(".cell")[r*9+c];
+
+if(n==solution[r][c]){
+
+puzzle[r][c]=n;
+cell.textContent=n;
+cell.classList.remove("error");
+
+win();
+
+}else{
+
+mistakes++;
+document.getElementById("mistakes").textContent=mistakes;
+cell.classList.add("error");
+
+if(mistakes>=3){
+document.getElementById("message").textContent="Game Over!";
+clearInterval(timer);
+}
+}
+}
+
+function win(){
+
+for(let r=0;r<9;r++)
+for(let c=0;c<9;c++)
+if(puzzle[r][c]!=solution[r][c])return;
+
+clearInterval(timer);
+document.getElementById("message").textContent=
+"🎉 Congratulations! You completed Sudoku!";
+}
+
+function resetGame(){
+
+puzzle=original.map(r=>[...r]);
+mistakes=0;
+time=0;
+
+document.getElementById("mistakes").textContent=0;
+document.getElementById("message").textContent="";
+
+draw();
+startTimer();
+}
+
+function checkGame(){
+
+for(let r=0;r<9;r++)
+for(let c=0;c<9;c++)
+if(puzzle[r][c]!=0 && puzzle[r][c]!=solution[r][c]){
+document.getElementById("message").textContent=
+"❌ Some numbers are incorrect.";
+return;
+}
+
+document.getElementById("message").textContent=
+"👍 Everything is correct so far!";
+}
+
+function startTimer(){
+
+clearInterval(timer);
+
+timer=setInterval(()=>{
+
+time++;
+
+let m=Math.floor(time/60);
+let s=time%60;
+
+document.getElementById("timer").textContent=
+String(m).padStart(2,"0")+":"+
+String(s).padStart(2,"0");
+
+},1000);
+}
+
+newGame();
+
+</script>
+
+</body>
+</html>
