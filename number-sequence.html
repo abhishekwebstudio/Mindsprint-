@@ -1,300 +1,808 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Number Sequence | MindSprint</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
+  <title>Free Number Sequence Puzzle – Play Online | MindSprint</title>
 
-body{
-margin:0;
-font-family:Arial;
-background:#f4f7ff;
-color:#172033;
-text-align:center;
-}
+  <meta name="description" content="Play the free Number Sequence Puzzle online. Find number patterns, test your logical thinking and challenge your brain with MindSprint.">
 
-nav{
-background:white;
-padding:16px;
-box-shadow:0 2px 10px #ddd;
-}
+  <meta name="robots" content="index, follow">
 
-nav a{
-text-decoration:none;
-font-size:22px;
-font-weight:bold;
-color:#3157d5;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.container{
-max-width:500px;
-margin:25px auto;
-padding:15px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
 
-.info{
-display:flex;
-justify-content:space-around;
-margin:20px 0;
-}
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-.box{
-background:white;
-padding:10px 18px;
-border-radius:8px;
-}
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
 
-#sequence{
-background:white;
-padding:25px 10px;
-border-radius:12px;
-font-size:30px;
-font-weight:bold;
-margin:25px auto;
-box-shadow:0 3px 15px #ddd;
-word-break:break-word;
-}
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+      text-decoration: none;
+    }
 
-input{
-width:100%;
-padding:14px;
-font-size:18px;
-border:1px solid #ccc;
-border-radius:8px;
-text-align:center;
-}
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      margin-left: 15px;
+      font-size: 14px;
+    }
 
-button{
-margin:12px 5px;
-padding:11px 18px;
-border:0;
-border-radius:7px;
-background:#3157d5;
-color:white;
-cursor:pointer;
-}
+    nav a:hover {
+      color: #2563eb;
+    }
 
-#message{
-min-height:25px;
-font-weight:bold;
-margin:10px;
-}
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 35px 20px;
+    }
 
-.home{
-display:inline-block;
-margin-top:10px;
-padding:10px 18px;
-background:#172033;
-color:white;
-text-decoration:none;
-border-radius:7px;
-}
-</style>
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .hero p {
+      color: #6b7280;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .game-card {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .score-area {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .score-box {
+      background: #eef2ff;
+      padding: 8px 18px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .sequence {
+      background: #eff6ff;
+      border: 2px solid #dbeafe;
+      border-radius: 15px;
+      padding: 25px 15px;
+      margin: 20px auto;
+      max-width: 650px;
+      font-size: clamp(20px, 5vw, 34px);
+      font-weight: bold;
+      letter-spacing: 2px;
+      word-wrap: break-word;
+    }
+
+    .question {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    .option-btn {
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .new-game {
+      border: none;
+      background: #111827;
+      color: white;
+      padding: 11px 20px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 5px;
+    }
+
+    .new-game:hover {
+      background: #374151;
+    }
+
+    .message {
+      min-height: 25px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    section.content {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+    }
+
+    section.content h2 {
+      color: #111827;
+      margin-bottom: 12px;
+      font-size: 25px;
+    }
+
+    section.content h3 {
+      margin-top: 18px;
+      margin-bottom: 7px;
+      color: #2563eb;
+    }
+
+    section.content p {
+      color: #4b5563;
+      margin-bottom: 12px;
+    }
+
+    section.content ul {
+      padding-left: 22px;
+      color: #4b5563;
+    }
+
+    section.content li {
+      margin-bottom: 8px;
+    }
+
+    .example {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-weight: bold;
+      color: #374151;
+    }
+
+    .faq {
+      border-top: 1px solid #e5e7eb;
+      padding: 15px 0;
+    }
+
+    .faq:first-of-type {
+      border-top: none;
+    }
+
+    .faq h3 {
+      color: #111827;
+      margin-top: 0;
+    }
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: 25px 20px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 600px) {
+
+      .nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0 6px;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .container {
+        padding: 25px 12px;
+      }
+
+      .game-card,
+      section.content {
+        padding: 18px;
+      }
+
+      .sequence {
+        padding: 20px 10px;
+      }
+
+      .options {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .option-btn {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-<a href="index.html">MindSprint</a>
-</nav>
+<header>
 
-<div class="container">
+  <div class="nav">
 
-<h1>Number Sequence</h1>
+    <a href="index.html" class="logo">
+      MindSprint
+    </a>
 
-<p>Find the next number in the sequence.</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
 
-<div class="info">
+  </div>
 
-<div class="box">
-Level<br>
-<b id="level">1</b>
-</div>
+</header>
 
-<div class="box">
-Score<br>
-<b id="score">0</b>
-</div>
 
-<div class="box">
-Streak<br>
-<b id="streak">0</b>
-</div>
+<main class="container">
 
-</div>
 
-<div id="sequence">2, 4, 6, ?</div>
+  <!-- HERO -->
 
-<input
-id="answer"
-type="number"
-placeholder="Enter next number"
->
+  <div class="hero">
 
-<br>
+    <h1>Free Number Sequence Puzzle</h1>
 
-<button onclick="submitAnswer()">Submit</button>
-<button onclick="skip()">Skip</button>
-<button onclick="newGame()">New Game</button>
+    <p>
+      Find the missing number, identify patterns and challenge your
+      logical thinking with this free online number puzzle.
+    </p>
 
-<div id="message"></div>
+  </div>
 
-<a class="home" href="index.html">
-← Back to MindSprint
-</a>
 
-</div>
+  <!-- GAME -->
+
+  <div class="game-card">
+
+    <h2>Play Number Sequence</h2>
+
+    <div class="score-area">
+
+      <div class="score-box">
+        Score: <span id="score">0</span>
+      </div>
+
+      <div class="score-box">
+        Best: <span id="best">0</span>
+      </div>
+
+    </div>
+
+
+    <div class="sequence" id="sequence">
+      2, 4, 6, 8, ?
+    </div>
+
+
+    <div class="question">
+      What number comes next?
+    </div>
+
+
+    <div class="options" id="options"></div>
+
+
+    <button class="new-game" onclick="newGame()">
+      New Game
+    </button>
+
+
+    <div class="message" id="message"></div>
+
+  </div>
+
+
+  <!-- HOW TO PLAY -->
+
+  <section class="content">
+
+    <h2>How to Play Number Sequence</h2>
+
+    <p>
+      In this puzzle, you will see a sequence of numbers with one
+      missing value. Your task is to identify the pattern and choose
+      the correct next number.
+    </p>
+
+    <h3>Steps to Play</h3>
+
+    <ul>
+
+      <li>Look carefully at the numbers in the sequence.</li>
+
+      <li>Try to identify the mathematical pattern.</li>
+
+      <li>Check how the numbers change from one position to another.</li>
+
+      <li>Select the answer you think comes next.</li>
+
+      <li>Continue solving new sequences to improve your score.</li>
+
+    </ul>
+
+  </section>
+
+
+  <!-- PATTERNS -->
+
+  <section class="content">
+
+    <h2>How to Find Number Patterns</h2>
+
+    <p>
+      Number sequences can follow different types of patterns.
+      Looking at the difference between consecutive numbers is often
+      a useful first step.
+    </p>
+
+    <h3>Addition Pattern</h3>
+
+    <div class="example">
+      2, 4, 6, 8, 10
+    </div>
+
+    <p>
+      Each number increases by 2.
+    </p>
+
+
+    <h3>Subtraction Pattern</h3>
+
+    <div class="example">
+      20, 17, 14, 11, 8
+    </div>
+
+    <p>
+      Each number decreases by 3.
+    </p>
+
+
+    <h3>Multiplication Pattern</h3>
+
+    <div class="example">
+      2, 4, 8, 16, 32
+    </div>
+
+    <p>
+      Each number is multiplied by 2.
+    </p>
+
+
+    <h3>Increasing Difference</h3>
+
+    <div class="example">
+      2, 3, 5, 8, 12, 17
+    </div>
+
+    <p>
+      The differences increase by 1 each time:
+      +1, +2, +3, +4, +5.
+    </p>
+
+  </section>
+
+
+  <!-- TIPS -->
+
+  <section class="content">
+
+    <h2>Number Sequence Tips</h2>
+
+    <h3>1. Check the Difference</h3>
+
+    <p>
+      Subtract each number from the next one. A repeated difference
+      can reveal a simple pattern.
+    </p>
+
+    <h3>2. Check Multiplication</h3>
+
+    <p>
+      If the difference is not constant, check whether the numbers
+      are being multiplied or divided by a common value.
+    </p>
+
+    <h3>3. Look for Alternating Patterns</h3>
+
+    <p>
+      Some sequences use two different operations repeatedly.
+      For example, the pattern may alternate between adding and
+      multiplying.
+    </p>
+
+    <h3>4. Do Not Guess Too Quickly</h3>
+
+    <p>
+      Look at the entire sequence before choosing an answer.
+      A pattern that fits only the first two numbers may not be
+      the correct pattern.
+    </p>
+
+  </section>
+
+
+  <!-- STRATEGY -->
+
+  <section class="content">
+
+    <h2>Number Sequence Strategy</h2>
+
+    <p>
+      A useful strategy is to solve the easiest pattern first.
+      Start by checking addition and subtraction, then look for
+      multiplication, division or changing differences.
+    </p>
+
+    <p>
+      With practice, you may begin to recognize common patterns
+      more quickly. The goal is to understand the relationship
+      between the numbers rather than simply guessing.
+    </p>
+
+  </section>
+
+
+  <!-- BENEFITS -->
+
+  <section class="content">
+
+    <h2>Why Play Number Puzzles?</h2>
+
+    <p>
+      Number puzzles provide a simple way to practice logical
+      thinking and pattern recognition while solving short challenges.
+    </p>
+
+    <ul>
+
+      <li>Practices logical thinking</li>
+
+      <li>Encourages pattern recognition</li>
+
+      <li>Challenges problem-solving skills</li>
+
+      <li>Provides a short mental workout</li>
+
+      <li>Can be played directly in a web browser</li>
+
+    </ul>
+
+  </section>
+
+
+  <!-- FAQ -->
+
+  <section class="content">
+
+    <h2>Number Sequence FAQ</h2>
+
+
+    <div class="faq">
+
+      <h3>Is the Number Sequence game free?</h3>
+
+      <p>
+        Yes. The MindSprint Number Sequence Puzzle is free to play.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>Can I play this game on my phone?</h3>
+
+      <p>
+        Yes. The game is designed to work on smartphones, tablets
+        and computers.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>What skills does this puzzle challenge?</h3>
+
+      <p>
+        The game challenges pattern recognition, logical thinking
+        and problem-solving.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>How can I improve at number sequences?</h3>
+
+      <p>
+        Practice identifying differences, multiplication patterns,
+        changing differences and alternating patterns.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>Do I need an account to play?</h3>
+
+      <p>
+        No. You can play directly in your browser without creating
+        an account.
+      </p>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<footer>
+
+  <p>
+    © 2026 MindSprint. All rights reserved.
+  </p>
+
+  <p>
+
+    <a href="about.html">About</a>
+
+    <a href="privacy.html">Privacy</a>
+
+    <a href="contact.html">Contact</a>
+
+  </p>
+
+</footer>
+
 
 <script>
 
-let level=1;
-let score=0;
-let streak=0;
+const puzzles = [
 
-let answer=0;
+  {
+    sequence: "2, 4, 6, 8, ?",
+    answer: 10,
+    options: [9, 10, 12, 14]
+  },
 
-function makeQuestion(){
+  {
+    sequence: "5, 10, 15, 20, ?",
+    answer: 25,
+    options: [22, 24, 25, 30]
+  },
 
-let type=Math.floor(Math.random()*4);
+  {
+    sequence: "3, 6, 12, 24, ?",
+    answer: 48,
+    options: [36, 42, 48, 52]
+  },
 
-let nums=[];
+  {
+    sequence: "20, 17, 14, 11, ?",
+    answer: 8,
+    options: [6, 7, 8, 9]
+  },
 
-if(type===0){
+  {
+    sequence: "1, 4, 7, 10, ?",
+    answer: 13,
+    options: [11, 12, 13, 14]
+  },
 
-let start=Math.floor(Math.random()*10)+1;
-let gap=Math.floor(Math.random()*8)+2;
+  {
+    sequence: "2, 3, 5, 8, 12, ?",
+    answer: 17,
+    options: [15, 16, 17, 18]
+  },
 
-for(let i=0;i<4;i++){
-nums.push(start+i*gap);
-}
+  {
+    sequence: "10, 20, 40, 80, ?",
+    answer: 160,
+    options: [120, 140, 160, 180]
+  },
 
-answer=start+4*gap;
+  {
+    sequence: "100, 90, 80, 70, ?",
+    answer: 60,
+    options: [50, 55, 60, 65]
+  },
 
-}
+  {
+    sequence: "4, 8, 12, 16, ?",
+    answer: 20,
+    options: [18, 19, 20, 22]
+  },
 
-else if(type===1){
+  {
+    sequence: "1, 2, 4, 8, ?",
+    answer: 16,
+    options: [10, 12, 14, 16]
+  }
 
-let start=Math.floor(Math.random()*5)+1;
-let gap=Math.floor(Math.random()*5)+1;
+];
 
-for(let i=0;i<4;i++){
-nums.push(start*Math.pow(gap+1,i));
-}
 
-answer=start*Math.pow(gap+1,4);
+let currentPuzzle;
 
-}
+let score = 0;
 
-else if(type===2){
+let best =
+  Number(localStorage.getItem("numberSequenceBest")) || 0;
 
-let start=Math.floor(Math.random()*10)+1;
 
-for(let i=0;i<4;i++){
-nums.push(start+i*i);
-}
+document.getElementById("best").textContent = best;
 
-answer=start+16;
 
-}
+function newGame() {
 
-else{
+  score = 0;
 
-let start=Math.floor(Math.random()*20)+10;
-let gap=Math.floor(Math.random()*5)+2;
+  document.getElementById("score").textContent = score;
 
-for(let i=0;i<4;i++){
-nums.push(start-i*gap);
-}
+  document.getElementById("message").textContent = "";
 
-answer=start-4*gap;
-
-}
-
-document.getElementById("sequence").textContent=
-nums.join(", ")+" , ?";
-
-document.getElementById("answer").value="";
-
-}
-
-function submitAnswer(){
-
-let input=Number(document.getElementById("answer").value);
-
-if(document.getElementById("answer").value===""){
-return;
-}
-
-if(input===answer){
-
-score+=10;
-streak++;
-level++;
-
-document.getElementById("message").textContent=
-"✅ Correct!";
-
-}
-else{
-
-streak=0;
-
-document.getElementById("message").textContent=
-"❌ Wrong!";
+  loadPuzzle();
 
 }
 
-update();
 
-setTimeout(makeQuestion,500);
+function loadPuzzle() {
+
+  const random =
+    Math.floor(Math.random() * puzzles.length);
+
+  currentPuzzle =
+    puzzles[random];
+
+  document.getElementById("sequence").textContent =
+    currentPuzzle.sequence;
+
+  const options =
+    document.getElementById("options");
+
+  options.innerHTML = "";
+
+
+  const shuffledOptions =
+    [...currentPuzzle.options]
+      .sort(() => Math.random() - 0.5);
+
+
+  shuffledOptions.forEach(number => {
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "option-btn";
+
+    button.textContent =
+      number;
+
+    button.onclick =
+      () => checkAnswer(number);
+
+    options.appendChild(button);
+
+  });
 
 }
 
-function skip(){
 
-streak=0;
+function checkAnswer(selected) {
 
-document.getElementById("message").textContent=
-"Skipped!";
+  if (selected === currentPuzzle.answer) {
 
-update();
+    score++;
 
-makeQuestion();
+    document.getElementById("score").textContent =
+      score;
+
+    document.getElementById("message").textContent =
+      "✓ Correct!";
+
+    if (score > best) {
+
+      best = score;
+
+      localStorage.setItem(
+        "numberSequenceBest",
+        best
+      );
+
+      document.getElementById("best").textContent =
+        best;
+
+    }
+
+    setTimeout(() => {
+      loadPuzzle();
+    }, 500);
+
+  } else {
+
+    document.getElementById("message").textContent =
+      "✕ Incorrect. Try a new puzzle!";
+
+  }
 
 }
 
-function update(){
-
-document.getElementById("level").textContent=level;
-document.getElementById("score").textContent=score;
-document.getElementById("streak").textContent=streak;
-
-}
-
-function newGame(){
-
-level=1;
-score=0;
-streak=0;
-
-document.getElementById("message").textContent="";
-
-update();
-makeQuestion();
-
-}
-
-document.getElementById("answer")
-.addEventListener("keydown",function(e){
-
-if(e.key==="Enter"){
-submitAnswer();
-}
-
-});
 
 newGame();
 
