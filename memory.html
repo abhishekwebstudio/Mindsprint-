@@ -1,259 +1,649 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Memory Cards | MindSprint</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:Arial;
-background:#f4f7ff;
-color:#172033;
-text-align:center
-}
-nav{
-background:white;
-padding:16px;
-box-shadow:0 2px 10px #ddd
-}
-nav a{
-text-decoration:none;
-font-size:22px;
-font-weight:bold;
-color:#3157d5
-}
-.container{
-max-width:500px;
-margin:25px auto;
-padding:15px
-}
-.info{
-display:flex;
-justify-content:space-around;
-margin:20px 0
-}
-.box{
-background:white;
-padding:10px 18px;
-border-radius:8px
-}
-#game{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-width:min(92vw,420px);
-margin:auto
-}
-.card{
-aspect-ratio:1;
-background:#3157d5;
-border-radius:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-cursor:pointer;
-color:transparent
-}
-.card.open,
-.card.matched{
-background:white;
-color:#172033;
-border:2px solid #3157d5
-}
-button{
-margin:18px 5px;
-padding:11px 18px;
-border:0;
-border-radius:7px;
-background:#3157d5;
-color:white;
-cursor:pointer
-}
-#message{
-min-height:25px;
-font-weight:bold
-}
-.home{
-display:inline-block;
-margin-top:10px;
-padding:10px 18px;
-background:#172033;
-color:white;
-text-decoration:none;
-border-radius:7px
-}
-</style>
+  <title>Free Memory Card Game – Play Online | MindSprint</title>
+
+  <meta name="description" content="Play the free Memory Card Game online with MindSprint. Match pairs, test your memory and improve concentration with a simple brain-training game.">
+
+  <meta name="robots" content="index, follow">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #2563eb;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 35px 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .hero p {
+      color: #6b7280;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .game-card {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .score-area {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+
+    .score-box {
+      background: #eef2ff;
+      padding: 8px 18px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    #game {
+      width: min(90vw, 450px);
+      margin: 20px auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(24px, 7vw, 38px);
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card.flipped,
+    .card.matched {
+      background: #dbeafe;
+      color: #111827;
+    }
+
+    .card.matched {
+      cursor: default;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    button {
+      border: none;
+      padding: 11px 18px;
+      border-radius: 9px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-weight: bold;
+      min-height: 25px;
+    }
+
+    section.content {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+    }
+
+    section.content h2 {
+      color: #111827;
+      margin-bottom: 12px;
+      font-size: 25px;
+    }
+
+    section.content h3 {
+      margin-top: 18px;
+      margin-bottom: 7px;
+      color: #2563eb;
+    }
+
+    section.content p {
+      color: #4b5563;
+      margin-bottom: 12px;
+    }
+
+    section.content ul {
+      padding-left: 22px;
+      color: #4b5563;
+    }
+
+    section.content li {
+      margin-bottom: 8px;
+    }
+
+    .faq {
+      border-top: 1px solid #e5e7eb;
+      padding: 15px 0;
+    }
+
+    .faq:first-of-type {
+      border-top: none;
+    }
+
+    .faq h3 {
+      color: #111827;
+      margin-top: 0;
+    }
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: 25px 20px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 600px) {
+      .nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0 6px;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .container {
+        padding: 25px 12px;
+      }
+
+      .game-card,
+      section.content {
+        padding: 18px;
+      }
+
+      #game {
+        gap: 7px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-<a href="index.html">MindSprint</a>
-</nav>
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo">MindSprint</a>
 
-<div class="container">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<h1>Memory Cards</h1>
-<p>Find all matching pairs.</p>
+<main class="container">
 
-<div class="info">
-<div class="box">Moves<br><b id="moves">0</b></div>
-<div class="box">Pairs<br><b id="pairs">0</b>/8</div>
-<div class="box">Time<br><b id="time">00:00</b></div>
-</div>
+  <div class="hero">
+    <h1>Free Memory Card Game</h1>
 
-<div id="game"></div>
+    <p>
+      Match the cards, test your memory and challenge your concentration
+      with this free online memory game.
+    </p>
+  </div>
 
-<button onclick="newGame()">New Game</button>
 
-<div id="message"></div>
+  <!-- GAME -->
 
-<a class="home" href="index.html">← Back to MindSprint</a>
+  <div class="game-card">
 
-</div>
+    <h2>Play Memory Cards</h2>
+
+    <div class="score-area">
+
+      <div class="score-box">
+        Moves: <span id="moves">0</span>
+      </div>
+
+      <div class="score-box">
+        Matches: <span id="matches">0</span>/8
+      </div>
+
+    </div>
+
+    <div id="game"></div>
+
+    <div class="controls">
+      <button onclick="newGame()">New Game</button>
+    </div>
+
+    <div class="message" id="message"></div>
+
+  </div>
+
+
+  <!-- HOW TO PLAY -->
+
+  <section class="content">
+
+    <h2>How to Play the Memory Card Game</h2>
+
+    <p>
+      The goal of the Memory Card Game is to find all matching pairs
+      of cards. Each card has a hidden symbol and every symbol appears
+      twice.
+    </p>
+
+    <h3>Simple Steps</h3>
+
+    <ul>
+      <li>Click or tap a card to reveal it.</li>
+      <li>Choose a second card.</li>
+      <li>If the two cards match, they remain open.</li>
+      <li>If they do not match, they are hidden again.</li>
+      <li>Remember the locations of previously revealed cards.</li>
+      <li>Find all pairs to complete the game.</li>
+    </ul>
+
+  </section>
+
+
+  <!-- RULES -->
+
+  <section class="content">
+
+    <h2>Memory Game Rules</h2>
+
+    <ul>
+      <li>Only two cards can be revealed at a time.</li>
+      <li>Matching pairs remain visible.</li>
+      <li>Non-matching cards are turned back over.</li>
+      <li>The game ends when all pairs are matched.</li>
+      <li>Try to complete the game using as few moves as possible.</li>
+    </ul>
+
+  </section>
+
+
+  <!-- TIPS -->
+
+  <section class="content">
+
+    <h2>Memory Game Tips</h2>
+
+    <h3>1. Remember Card Positions</h3>
+
+    <p>
+      Pay attention to where each symbol appears. When the same symbol
+      appears later, you can use your memory to find its matching card.
+    </p>
+
+    <h3>2. Stay Focused</h3>
+
+    <p>
+      Try to concentrate on the cards you have already seen instead of
+      clicking randomly.
+    </p>
+
+    <h3>3. Use a Simple Pattern</h3>
+
+    <p>
+      You can mentally organize the board from left to right or
+      top to bottom to make card positions easier to remember.
+    </p>
+
+    <h3>4. Take Your Time</h3>
+
+    <p>
+      The objective is not only speed. Remembering the correct positions
+      can help you reduce unnecessary moves.
+    </p>
+
+  </section>
+
+
+  <!-- BENEFITS -->
+
+  <section class="content">
+
+    <h2>Why Play Memory Games?</h2>
+
+    <p>
+      Memory games provide a simple way to practice remembering
+      information and maintaining attention while solving a puzzle.
+    </p>
+
+    <ul>
+      <li>Practices memory recall</li>
+      <li>Encourages concentration</li>
+      <li>Improves attention to details</li>
+      <li>Provides a quick mental challenge</li>
+      <li>Can be played directly in a browser</li>
+    </ul>
+
+  </section>
+
+
+  <!-- FAQ -->
+
+  <section class="content">
+
+    <h2>Memory Card Game FAQ</h2>
+
+    <div class="faq">
+
+      <h3>Is this memory game free?</h3>
+
+      <p>
+        Yes. The MindSprint Memory Card Game is free to play.
+      </p>
+
+    </div>
+
+    <div class="faq">
+
+      <h3>How many cards are in the game?</h3>
+
+      <p>
+        This version contains 16 cards arranged in an 8-pair grid.
+      </p>
+
+    </div>
+
+    <div class="faq">
+
+      <h3>Can I play the game on my phone?</h3>
+
+      <p>
+        Yes. The game is designed to work on both mobile phones
+        and larger screens.
+      </p>
+
+    </div>
+
+    <div class="faq">
+
+      <h3>How can I improve my memory game score?</h3>
+
+      <p>
+        Try to remember the position of each card and avoid opening
+        cards randomly. Fewer unnecessary moves can lead to a better result.
+      </p>
+
+    </div>
+
+    <div class="faq">
+
+      <h3>Do I need an account to play?</h3>
+
+      <p>
+        No. You can play directly in your browser without creating
+        an account.
+      </p>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  <p>© 2026 MindSprint. All rights reserved.</p>
+
+  <p>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+  </p>
+
+</footer>
+
 
 <script>
 
-const symbols=["🍎","🍌","🍇","🍉","🍓","🍒","🥝","🍍"];
+const symbols = [
+  "🍎", "🍌", "🍇", "🍊",
+  "🍉", "🍓", "🥝", "🍒"
+];
 
-let cards=[];
-let first=null;
-let second=null;
-let lock=false;
-let moves=0;
-let pairs=0;
-let seconds=0;
-let timer;
+let cards = [];
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let moves = 0;
+let matches = 0;
 
-function newGame(){
 
-clearInterval(timer);
+function newGame() {
 
-cards=[...symbols,...symbols]
-.sort(()=>Math.random()-0.5);
+  cards = [...symbols, ...symbols];
 
-first=null;
-second=null;
-lock=false;
-moves=0;
-pairs=0;
-seconds=0;
+  cards.sort(() => Math.random() - 0.5);
 
-document.getElementById("moves").textContent=0;
-document.getElementById("pairs").textContent=0;
-document.getElementById("time").textContent="00:00";
-document.getElementById("message").textContent="";
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
 
-draw();
-startTimer();
+  moves = 0;
+  matches = 0;
 
-}
+  document.getElementById("moves").textContent = moves;
+  document.getElementById("matches").textContent = matches;
+  document.getElementById("message").textContent = "";
 
-function draw(){
-
-let game=document.getElementById("game");
-game.innerHTML="";
-
-cards.forEach((symbol,index)=>{
-
-let card=document.createElement("div");
-
-card.className="card";
-card.dataset.index=index;
-card.textContent=symbol;
-
-card.onclick=()=>flip(index,card);
-
-game.appendChild(card);
-
-});
+  createBoard();
 
 }
 
-function flip(index,card){
 
-if(lock)return;
-if(card.classList.contains("open"))return;
-if(card.classList.contains("matched"))return;
+function createBoard() {
 
-card.classList.add("open");
+  const game = document.getElementById("game");
 
-if(first===null){
+  game.innerHTML = "";
 
-first=index;
+  cards.forEach((symbol, index) => {
 
-}else{
+    const card = document.createElement("div");
 
-second=index;
-moves++;
+    card.className = "card";
 
-document.getElementById("moves").textContent=moves;
+    card.dataset.symbol = symbol;
 
-let all=document.querySelectorAll(".card");
-let firstCard=all[first];
+    card.dataset.index = index;
 
-if(cards[first]===cards[second]){
+    card.textContent = "?";
 
-firstCard.classList.add("matched");
-card.classList.add("matched");
+    card.addEventListener("click", () => flipCard(card));
 
-first=null;
-second=null;
+    game.appendChild(card);
 
-pairs++;
-
-document.getElementById("pairs").textContent=pairs;
-
-if(pairs===8){
-
-clearInterval(timer);
-
-document.getElementById("message").textContent=
-"🎉 Congratulations! You found all pairs!";
+  });
 
 }
 
-}else{
 
-lock=true;
+function flipCard(card) {
 
-setTimeout(()=>{
+  if (lockBoard) return;
 
-firstCard.classList.remove("open");
-card.classList.remove("open");
+  if (card === firstCard) return;
 
-first=null;
-second=null;
-lock=false;
+  if (card.classList.contains("matched")) return;
 
-},700);
+  card.classList.add("flipped");
+
+  card.textContent = card.dataset.symbol;
+
+  if (!firstCard) {
+
+    firstCard = card;
+
+    return;
+
+  }
+
+  secondCard = card;
+
+  moves++;
+
+  document.getElementById("moves").textContent = moves;
+
+  checkMatch();
+
+}
+
+
+function checkMatch() {
+
+  const isMatch =
+    firstCard.dataset.symbol === secondCard.dataset.symbol;
+
+  if (isMatch) {
+
+    firstCard.classList.add("matched");
+    secondCard.classList.add("matched");
+
+    matches++;
+
+    document.getElementById("matches").textContent = matches;
+
+    resetCards();
+
+    if (matches === 8) {
+
+      document.getElementById("message").textContent =
+        "🎉 Congratulations! You matched all the cards!";
+
+    }
+
+  } else {
+
+    lockBoard = true;
+
+    setTimeout(() => {
+
+      firstCard.classList.remove("flipped");
+      secondCard.classList.remove("flipped");
+
+      firstCard.textContent = "?";
+      secondCard.textContent = "?";
+
+      resetCards();
+
+    }, 800);
+
+  }
 
 }
 
-}
+
+function resetCards() {
+
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
 
 }
 
-function startTimer(){
-
-timer=setInterval(()=>{
-
-seconds++;
-
-let m=Math.floor(seconds/60);
-let s=seconds%60;
-
-document.getElementById("time").textContent=
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0");
-
-},1000);
-
-}
 
 newGame();
 
