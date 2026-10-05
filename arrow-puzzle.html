@@ -1,197 +1,743 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Arrow Puzzle | MindSprint</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:Arial;
-background:#f4f7ff;
-color:#172033;
-text-align:center
-}
-nav{
-background:white;
-padding:16px;
-box-shadow:0 2px 10px #ddd
-}
-nav a{
-text-decoration:none;
-font-size:22px;
-font-weight:bold;
-color:#3157d5
-}
-.container{
-max-width:500px;
-margin:25px auto;
-padding:15px
-}
-#arrow{
-background:white;
-width:220px;
-height:220px;
-margin:30px auto;
-border-radius:15px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:100px;
-box-shadow:0 3px 15px #ddd
-}
-.info{
-display:flex;
-justify-content:space-around;
-margin:20px 0
-}
-.box{
-background:white;
-padding:10px 18px;
-border-radius:8px
-}
-.buttons{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-max-width:350px;
-margin:auto
-}
-button{
-padding:15px;
-border:0;
-border-radius:8px;
-background:#3157d5;
-color:white;
-font-size:17px;
-cursor:pointer
-}
-.new{
-margin:20px 5px
-}
-#message{
-min-height:25px;
-font-weight:bold
-}
-.home{
-display:inline-block;
-margin-top:10px;
-padding:10px 18px;
-background:#172033;
-color:white;
-text-decoration:none;
-border-radius:7px
-}
-</style>
+  <title>Free Arrow Puzzle Game – Play Online | MindSprint</title>
+
+  <meta name="description" content="Play the free Arrow Puzzle Game online. Follow the correct arrow direction, test your focus and reaction skills, and challenge your brain with MindSprint.">
+
+  <meta name="robots" content="index, follow">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #2563eb;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 35px 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .hero p {
+      color: #6b7280;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .game-card {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .score-area {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .score-box {
+      background: #eef2ff;
+      padding: 8px 18px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .arrow-board {
+      width: min(90vw, 420px);
+      height: min(90vw, 420px);
+      margin: 20px auto;
+      background: #eff6ff;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #dbeafe;
+    }
+
+    #arrow {
+      font-size: clamp(90px, 25vw, 150px);
+      font-weight: bold;
+      color: #2563eb;
+      user-select: none;
+    }
+
+    .instruction {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 330px;
+      margin: 20px auto;
+    }
+
+    .direction-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 22px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .direction-btn:hover {
+      background: #1d4ed8;
+      transform: scale(1.03);
+    }
+
+    .up {
+      grid-column: 2;
+    }
+
+    .left {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .down {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .right {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    .controls {
+      margin-top: 10px;
+    }
+
+    .new-game {
+      background: #111827;
+      color: white;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .new-game:hover {
+      background: #374151;
+    }
+
+    .message {
+      min-height: 25px;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    section.content {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+    }
+
+    section.content h2 {
+      color: #111827;
+      margin-bottom: 12px;
+      font-size: 25px;
+    }
+
+    section.content h3 {
+      margin-top: 18px;
+      margin-bottom: 7px;
+      color: #2563eb;
+    }
+
+    section.content p {
+      color: #4b5563;
+      margin-bottom: 12px;
+    }
+
+    section.content ul {
+      padding-left: 22px;
+      color: #4b5563;
+    }
+
+    section.content li {
+      margin-bottom: 8px;
+    }
+
+    .faq {
+      border-top: 1px solid #e5e7eb;
+      padding: 15px 0;
+    }
+
+    .faq:first-of-type {
+      border-top: none;
+    }
+
+    .faq h3 {
+      color: #111827;
+      margin-top: 0;
+    }
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: 25px 20px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 600px) {
+
+      .nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0 6px;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .container {
+        padding: 25px 12px;
+      }
+
+      .game-card,
+      section.content {
+        padding: 18px;
+      }
+
+      .arrow-board {
+        border-radius: 14px;
+      }
+
+      .buttons {
+        max-width: 280px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-<a href="index.html">MindSprint</a>
-</nav>
+<header>
 
-<div class="container">
+  <div class="nav">
 
-<h1>Arrow Puzzle</h1>
-<p>Choose the direction shown by the arrow.</p>
+    <a href="index.html" class="logo">
+      MindSprint
+    </a>
 
-<div class="info">
-<div class="box">Score<br><b id="score">0</b></div>
-<div class="box">Streak<br><b id="streak">0</b></div>
-<div class="box">Best<br><b id="best">0</b></div>
-</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
 
-<div id="arrow">↑</div>
+  </div>
 
-<div class="buttons">
-<button onclick="answer('up')">⬆ Up</button>
-<button onclick="answer('right')">➡ Right</button>
-<button onclick="answer('left')">⬅ Left</button>
-<button onclick="answer('down')">⬇ Down</button>
-</div>
+</header>
 
-<button class="new" onclick="newGame()">New Game</button>
 
-<div id="message"></div>
+<main class="container">
 
-<a class="home" href="index.html">← Back to MindSprint</a>
 
-</div>
+  <!-- HERO -->
+
+  <div class="hero">
+
+    <h1>Free Arrow Puzzle Game</h1>
+
+    <p>
+      Follow the correct arrow direction, test your focus and reaction
+      speed, and challenge your brain with this free online puzzle game.
+    </p>
+
+  </div>
+
+
+  <!-- GAME -->
+
+  <div class="game-card">
+
+    <h2>Play Arrow Puzzle</h2>
+
+    <div class="score-area">
+
+      <div class="score-box">
+        Score: <span id="score">0</span>
+      </div>
+
+      <div class="score-box">
+        Best: <span id="best">0</span>
+      </div>
+
+    </div>
+
+
+    <div class="instruction">
+      Click the button matching the arrow direction.
+    </div>
+
+
+    <div class="arrow-board">
+
+      <div id="arrow">⬆</div>
+
+    </div>
+
+
+    <div class="buttons">
+
+      <button
+        class="direction-btn up"
+        onclick="checkAnswer('up')">
+        ↑
+      </button>
+
+      <button
+        class="direction-btn left"
+        onclick="checkAnswer('left')">
+        ←
+      </button>
+
+      <button
+        class="direction-btn down"
+        onclick="checkAnswer('down')">
+        ↓
+      </button>
+
+      <button
+        class="direction-btn right"
+        onclick="checkAnswer('right')">
+        →
+      </button>
+
+    </div>
+
+
+    <div class="controls">
+
+      <button
+        class="new-game"
+        onclick="newGame()">
+        New Game
+      </button>
+
+    </div>
+
+
+    <div
+      class="message"
+      id="message">
+    </div>
+
+  </div>
+
+
+  <!-- HOW TO PLAY -->
+
+  <section class="content">
+
+    <h2>How to Play the Arrow Puzzle</h2>
+
+    <p>
+      The Arrow Puzzle is a simple reaction and concentration game.
+      An arrow appears on the screen and you need to select the button
+      pointing in the same direction.
+    </p>
+
+    <h3>Steps to Play</h3>
+
+    <ul>
+
+      <li>Look carefully at the arrow displayed on the screen.</li>
+
+      <li>Identify whether it points up, down, left or right.</li>
+
+      <li>Click the matching direction button.</li>
+
+      <li>A new arrow will appear after your answer.</li>
+
+      <li>Try to build the highest score possible.</li>
+
+    </ul>
+
+  </section>
+
+
+  <!-- RULES -->
+
+  <section class="content">
+
+    <h2>Arrow Puzzle Rules</h2>
+
+    <ul>
+
+      <li>Choose the direction that matches the displayed arrow.</li>
+
+      <li>A correct answer increases your score.</li>
+
+      <li>An incorrect answer ends the current round.</li>
+
+      <li>Your best score is saved in your browser.</li>
+
+      <li>You can start a new game at any time.</li>
+
+    </ul>
+
+  </section>
+
+
+  <!-- FOCUS -->
+
+  <section class="content">
+
+    <h2>Focus and Reaction Tips</h2>
+
+    <h3>1. Look at the Arrow First</h3>
+
+    <p>
+      Do not click immediately. Quickly identify the direction of the
+      arrow before selecting an answer.
+    </p>
+
+    <h3>2. Avoid Random Clicking</h3>
+
+    <p>
+      Speed is useful, but accuracy is more important. Random clicking
+      can end your round quickly.
+    </p>
+
+    <h3>3. Keep Your Attention on the Board</h3>
+
+    <p>
+      Try to avoid distractions while playing. Maintaining attention
+      can make it easier to recognize each new direction.
+    </p>
+
+    <h3>4. Practice Regularly</h3>
+
+    <p>
+      Short practice sessions can help you become more familiar with
+      the four directions and the game's controls.
+    </p>
+
+  </section>
+
+
+  <!-- STRATEGY -->
+
+  <section class="content">
+
+    <h2>Arrow Puzzle Strategy</h2>
+
+    <p>
+      A simple strategy is to recognize the arrow before moving your
+      eyes toward the buttons. This can reduce unnecessary movement
+      and make your responses more consistent.
+    </p>
+
+    <p>
+      Focus on accuracy first. Once you become comfortable identifying
+      the directions, try to increase your response speed.
+    </p>
+
+  </section>
+
+
+  <!-- BENEFITS -->
+
+  <section class="content">
+
+    <h2>Why Play Reaction and Focus Games?</h2>
+
+    <p>
+      Simple reaction games can provide a quick mental challenge and
+      encourage players to pay attention to visual information.
+    </p>
+
+    <ul>
+
+      <li>Practices visual attention</li>
+
+      <li>Encourages quick decision making</li>
+
+      <li>Challenges concentration</li>
+
+      <li>Provides a short brain-training activity</li>
+
+      <li>Can be played directly in a web browser</li>
+
+    </ul>
+
+  </section>
+
+
+  <!-- FAQ -->
+
+  <section class="content">
+
+    <h2>Arrow Puzzle FAQ</h2>
+
+
+    <div class="faq">
+
+      <h3>Is the Arrow Puzzle free?</h3>
+
+      <p>
+        Yes. The MindSprint Arrow Puzzle is free to play.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>Can I play this game on my phone?</h3>
+
+      <p>
+        Yes. The game is designed to work on smartphones, tablets
+        and computers.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>What is the goal of the game?</h3>
+
+      <p>
+        The goal is to select the correct direction for as many
+        arrows as possible and achieve a high score.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>How can I improve my score?</h3>
+
+      <p>
+        Focus on accuracy first and gradually improve your response
+        speed as you become familiar with the game.
+      </p>
+
+    </div>
+
+
+    <div class="faq">
+
+      <h3>Do I need an account to play?</h3>
+
+      <p>
+        No. You can play the game directly in your browser without
+        creating an account.
+      </p>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<footer>
+
+  <p>
+    © 2026 MindSprint. All rights reserved.
+  </p>
+
+  <p>
+
+    <a href="about.html">About</a>
+
+    <a href="privacy.html">Privacy</a>
+
+    <a href="contact.html">Contact</a>
+
+  </p>
+
+</footer>
+
 
 <script>
 
-let directions=["up","right","down","left"];
-let symbols={
-up:"↑",
-right:"→",
-down:"↓",
-left:"←"
-};
-
-let current="";
-let score=0;
-let streak=0;
-let best=Number(localStorage.getItem("arrowBest")||0);
-
-document.getElementById("best").textContent=best;
-
-function newGame(){
-
-score=0;
-streak=0;
-
-document.getElementById("score").textContent=0;
-document.getElementById("streak").textContent=0;
-document.getElementById("message").textContent="";
-
-next();
-
-}
-
-function next(){
-
-current=directions[
-Math.floor(Math.random()*directions.length)
+const directions = [
+  {
+    name: "up",
+    symbol: "↑"
+  },
+  {
+    name: "down",
+    symbol: "↓"
+  },
+  {
+    name: "left",
+    symbol: "←"
+  },
+  {
+    name: "right",
+    symbol: "→"
+  }
 ];
 
-document.getElementById("arrow").textContent=symbols[current];
+
+let currentDirection;
+
+let score = 0;
+
+let best =
+  Number(localStorage.getItem("arrowBest")) || 0;
+
+
+document.getElementById("best").textContent = best;
+
+
+function newGame() {
+
+  score = 0;
+
+  document.getElementById("score").textContent = score;
+
+  document.getElementById("message").textContent = "";
+
+  generateArrow();
 
 }
 
-function answer(choice){
 
-if(choice===current){
+function generateArrow() {
 
-score++;
-streak++;
+  const random =
+    Math.floor(Math.random() * directions.length);
 
-document.getElementById("message").textContent="✅ Correct!";
+  currentDirection =
+    directions[random];
 
-}else{
-
-streak=0;
-
-document.getElementById("message").textContent="❌ Wrong!";
+  document.getElementById("arrow").textContent =
+    currentDirection.symbol;
 
 }
 
-if(score>best){
 
-best=score;
-localStorage.setItem("arrowBest",best);
+function checkAnswer(answer) {
+
+  if (answer === currentDirection.name) {
+
+    score++;
+
+    document.getElementById("score").textContent =
+      score;
+
+    document.getElementById("message").textContent =
+      "✓ Correct!";
+
+    if (score > best) {
+
+      best = score;
+
+      localStorage.setItem(
+        "arrowBest",
+        best
+      );
+
+      document.getElementById("best").textContent =
+        best;
+
+    }
+
+    generateArrow();
+
+  } else {
+
+    document.getElementById("message").textContent =
+      "✕ Wrong direction! Game over. Score: " + score;
+
+  }
 
 }
 
-document.getElementById("score").textContent=score;
-document.getElementById("streak").textContent=streak;
-document.getElementById("best").textContent=best;
-
-setTimeout(next,300);
-
-}
 
 newGame();
 
