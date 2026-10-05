@@ -1,425 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Sudoku | MindSprint</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
-body{
-font-family:Arial;
-margin:0;
-background:#f4f7ff;
-color:#172033;
-text-align:center
-}
-nav{
-background:white;
-padding:16px;
-box-shadow:0 2px 10px #ddd
-}
-nav a{
-text-decoration:none;
-color:#3157d5;
-font-weight:bold;
-font-size:22px
-}
-.container{
-max-width:500px;
-margin:25px auto;
-padding:15px
-}
-h1{margin-bottom:5px}
-p{color:#667085}
+  <title>Free Online Sudoku Game – Play Sudoku | MindSprint</title>
 
-.controls{
-display:flex;
-justify-content:center;
-gap:8px;
-flex-wrap:wrap;
-margin:15px
-}
+  <meta name="description" content="Play free Sudoku online with MindSprint. Improve your logic, concentration and problem-solving skills with our simple and responsive Sudoku game.">
 
-button,select{
-padding:10px 14px;
-border:0;
-border-radius:7px;
-cursor:pointer
-}
+  <meta name="robots" content="index, follow">
 
-button{
-background:#3157d5;
-color:white
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-select{
-background:white;
-border:1px solid #ccc
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
 
-.info{
-display:flex;
-justify-content:space-around;
-background:white;
-padding:12px;
-border-radius:8px;
-margin:15px 0
-}
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-#board{
-display:grid;
-grid-template-columns:repeat(9,1fr);
-width:min(92vw,450px);
-margin:auto;
-border:3px solid #172033
-}
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
 
-.cell{
-aspect-ratio:1;
-background:white;
-border:1px solid #bbb;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-font-weight:bold;
-cursor:pointer
-}
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+      text-decoration: none;
+    }
 
-.fixed{
-background:#e9edff;
-cursor:default
-}
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      margin-left: 15px;
+      font-size: 14px;
+    }
 
-.selected{
-background:#cfdcff
-}
+    nav a:hover {
+      color: #2563eb;
+    }
 
-.error{
-background:#ffd5d5
-}
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 35px 20px;
+    }
 
-.numbers{
-display:grid;
-grid-template-columns:repeat(9,1fr);
-gap:5px;
-margin:15px auto;
-max-width:450px
-}
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-.numbers button{
-padding:12px 0
-}
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
 
-#message{
-min-height:25px;
-font-weight:bold
-}
+    .hero p {
+      color: #6b7280;
+      max-width: 700px;
+      margin: auto;
+    }
 
-.home{
-display:inline-block;
-margin-top:15px;
-padding:10px 18px;
-background:#172033;
-color:white;
-text-decoration:none;
-border-radius:7px
-}
+    .game-card {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+      text-align: center;
+      margin-bottom: 35px;
+    }
 
-footer{
-margin-top:35px;
-padding:25px;
-color:#667085
-}
-</style>
+    #sudoku {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      width: min(90vw, 450px);
+      aspect-ratio: 1 / 1;
+      margin: 20px auto;
+      border: 3px solid #111827;
+    }
+
+    .cell {
+      border: 1px solid #9ca3af;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(16px, 4vw, 25px);
+      font-weight: bold;
+      cursor: pointer;
+      background: #ffffff;
+      user-select: none;
+    }
+
+    .cell:nth-child(3n) {
+      border-right: 2px solid #111827;
+    }
+
+    .cell:nth-child(9n) {
+      border-right: none;
+    }
+
+    .cell:nth-child(n+19):nth-child(-n+27),
+    .cell:nth-child(n+46):nth-child(-n+54) {
+      border-bottom: 2px solid #111827;
+    }
+
+    .cell.selected {
+      background: #dbeafe;
+    }
+
+    .cell.fixed {
+      background: #eef2ff;
+      color: #111827;
+      cursor: default;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    button {
+      border: none;
+      padding: 11px 18px;
+      border-radius: 9px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .number-buttons {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 7px;
+      max-width: 450px;
+      margin: 15px auto;
+    }
+
+    .number-buttons button {
+      padding: 10px 5px;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-weight: bold;
+      min-height: 25px;
+    }
+
+    section.content {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+    }
+
+    section.content h2 {
+      color: #111827;
+      margin-bottom: 12px;
+      font-size: 25px;
+    }
+
+    section.content h3 {
+      margin-top: 18px;
+      margin-bottom: 7px;
+      color: #2563eb;
+    }
+
+    section.content p {
+      color: #4b5563;
+      margin-bottom: 12px;
+    }
+
+    section.content ul {
+      padding-left: 22px;
+      color: #4b5563;
+    }
+
+    section.content li {
+      margin-bottom: 8px;
+    }
+
+    .faq {
+      border-top: 1px solid #e5e7eb;
+      padding: 15px 0;
+    }
+
+    .faq:first-of-type {
+      border-top: none;
+    }
+
+    .faq h3 {
+      color: #111827;
+      margin-top: 0;
+    }
+
+    footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: 25px 20px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    @media (max-width: 600px) {
+      .nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0 6px;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .container {
+        padding: 25px 12px;
+      }
+
+      .game-card,
+      section.content {
+        padding: 18px;
+      }
+
+      .number-buttons {
+        gap: 5px;
+      }
+
+      .number-buttons button {
+        padding: 9px 3px;
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-<a href="index.html">MindSprint</a>
-</nav>
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo">MindSprint</a>
 
-<div class="container">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<h1>Sudoku</h1>
-<p>Test your logic and complete the puzzle.</p>
+<main class="container">
 
-<div class="controls">
+  <div class="hero">
+    <h1>Free Online Sudoku</h1>
+    <p>
+      Play Sudoku online for free and challenge your logic,
+      concentration and problem-solving skills.
+    </p>
+  </div>
 
-<select id="difficulty">
-<option value="easy">Easy</option>
-<option value="medium" selected>Medium</option>
-<option value="hard">Hard</option>
-</select>
+  <!-- GAME -->
+  <div class="game-card">
 
-<button onclick="newGame()">New Game</button>
-<button onclick="resetGame()">Reset</button>
-<button onclick="checkGame()">Check</button>
+    <h2>Play Sudoku</h2>
 
-</div>
+    <div id="sudoku"></div>
 
-<div class="info">
-<span>Mistakes: <b id="mistakes">0</b>/3</span>
-<span>Time: <b id="timer">00:00</b></span>
-</div>
+    <div class="number-buttons">
+      <button onclick="selectNumber(1)">1</button>
+      <button onclick="selectNumber(2)">2</button>
+      <button onclick="selectNumber(3)">3</button>
+      <button onclick="selectNumber(4)">4</button>
+      <button onclick="selectNumber(5)">5</button>
+      <button onclick="selectNumber(6)">6</button>
+      <button onclick="selectNumber(7)">7</button>
+      <button onclick="selectNumber(8)">8</button>
+      <button onclick="selectNumber(9)">9</button>
+    </div>
 
-<div id="board"></div>
+    <div class="controls">
+      <button onclick="newGame()">New Game</button>
+      <button onclick="clearCell()">Clear</button>
+      <button onclick="checkGame()">Check</button>
+    </div>
 
-<div class="numbers">
-<button onclick="put(1)">1</button>
-<button onclick="put(2)">2</button>
-<button onclick="put(3)">3</button>
-<button onclick="put(4)">4</button>
-<button onclick="put(5)">5</button>
-<button onclick="put(6)">6</button>
-<button onclick="put(7)">7</button>
-<button onclick="put(8)">8</button>
-<button onclick="put(9)">9</button>
-</div>
+    <div class="message" id="message"></div>
 
-<div id="message"></div>
+  </div>
 
-<a class="home" href="index.html">
-← Back to MindSprint
-</a>
+  <!-- HOW TO PLAY -->
+  <section class="content">
+    <h2>How to Play Sudoku</h2>
 
-</div>
+    <p>
+      Sudoku is a logic-based number puzzle played on a 9×9 grid.
+      The goal is to fill every empty cell with numbers from 1 to 9.
+    </p>
+
+    <p>
+      Each number can appear only once in every row, column and
+      3×3 box.
+    </p>
+
+    <h3>Simple Steps</h3>
+
+    <ul>
+      <li>Select an empty cell.</li>
+      <li>Choose a number from 1 to 9.</li>
+      <li>Make sure the number does not already exist in the same row.</li>
+      <li>Check that it does not exist in the same column.</li>
+      <li>Check the 3×3 box as well.</li>
+      <li>Continue until the complete grid is solved.</li>
+    </ul>
+  </section>
+
+  <!-- RULES -->
+  <section class="content">
+    <h2>Sudoku Rules</h2>
+
+    <ul>
+      <li>Every row must contain numbers 1 to 9 without repetition.</li>
+      <li>Every column must contain numbers 1 to 9 without repetition.</li>
+      <li>Every 3×3 box must contain numbers 1 to 9 without repetition.</li>
+      <li>Numbers already provided at the beginning cannot be changed.</li>
+      <li>A valid Sudoku has one correct solution.</li>
+    </ul>
+  </section>
+
+  <!-- TIPS -->
+  <section class="content">
+    <h2>Sudoku Tips and Strategies</h2>
+
+    <h3>1. Start with Easy Numbers</h3>
+    <p>
+      Look for rows, columns or boxes where only a few cells are empty.
+      These are usually easier to solve first.
+    </p>
+
+    <h3>2. Check Rows and Columns</h3>
+    <p>
+      Before placing a number, check both its row and column.
+      This helps avoid unnecessary mistakes.
+    </p>
+
+    <h3>3. Look at 3×3 Boxes</h3>
+    <p>
+      The smaller 3×3 sections are important. Check which numbers are
+      missing and where they can legally fit.
+    </p>
+
+    <h3>4. Do Not Guess Too Quickly</h3>
+    <p>
+      Sudoku is mainly a logic puzzle. Try to use the information already
+      available on the board before making guesses.
+    </p>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="content">
+    <h2>Why Play Sudoku?</h2>
+
+    <p>
+      Sudoku is a simple way to practice logical thinking and concentration.
+      Solving puzzles regularly can make you more comfortable with
+      identifying patterns and making logical decisions.
+    </p>
+
+    <ul>
+      <li>Practices logical thinking</li>
+      <li>Encourages concentration</li>
+      <li>Improves pattern recognition</li>
+      <li>Provides a challenging mental activity</li>
+      <li>Can be played without an account</li>
+    </ul>
+  </section>
+
+  <!-- FAQ -->
+  <section class="content">
+    <h2>Sudoku FAQ</h2>
+
+    <div class="faq">
+      <h3>Is this Sudoku game free?</h3>
+      <p>
+        Yes. You can play the MindSprint Sudoku game for free.
+      </p>
+    </div>
+
+    <div class="faq">
+      <h3>Do I need an account to play?</h3>
+      <p>
+        No. You can play the game directly in your browser.
+      </p>
+    </div>
+
+    <div class="faq">
+      <h3>What is the objective of Sudoku?</h3>
+      <p>
+        The objective is to fill the 9×9 grid so that every row,
+        column and 3×3 box contains numbers 1 to 9 without repetition.
+      </p>
+    </div>
+
+    <div class="faq">
+      <h3>Can beginners play Sudoku?</h3>
+      <p>
+        Yes. Beginners can start with simple puzzles and gradually
+        improve their solving skills.
+      </p>
+    </div>
+
+    <div class="faq">
+      <h3>Can I play Sudoku on a phone?</h3>
+      <p>
+        Yes. This page is designed to work on both mobile phones
+        and larger screens.
+      </p>
+    </div>
+
+  </section>
+
+</main>
 
 <footer>
-© 2026 MindSprint
+  <p>© 2026 MindSprint. All rights reserved.</p>
+  <p>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+  </p>
 </footer>
+
 
 <script>
 
-let solution=[];
-let puzzle=[];
-let original=[];
-let selected=null;
-let mistakes=0;
-let time=0;
-let timer;
+let puzzle = [];
+let solution = [];
+let selectedCell = null;
 
-function shuffle(a){
-for(let i=a.length-1;i>0;i--){
-let j=Math.floor(Math.random()*(i+1));
-[a[i],a[j]]=[a[j],a[i]];
-}
-return a;
-}
+function generateSudoku() {
 
-function makeSolution(){
+  const base = [
+    [1,2,3,4,5,6,7,8,9],
+    [4,5,6,7,8,9,1,2,3],
+    [7,8,9,1,2,3,4,5,6],
+    [2,3,4,5,6,7,8,9,1],
+    [5,6,7,8,9,1,2,3,4],
+    [8,9,1,2,3,4,5,6,7],
+    [3,4,5,6,7,8,9,1,2],
+    [6,7,8,9,1,2,3,4,5],
+    [9,1,2,3,4,5,6,7,8]
+  ];
 
-let g=Array.from({length:9},()=>Array(9).fill(0));
+  solution = JSON.parse(JSON.stringify(base));
 
-function valid(r,c,n){
+  puzzle = JSON.parse(JSON.stringify(base));
 
-for(let i=0;i<9;i++){
-if(g[r][i]==n)return false;
-if(g[i][c]==n)return false;
-}
+  let removed = 42;
 
-let sr=Math.floor(r/3)*3;
-let sc=Math.floor(c/3)*3;
+  while (removed > 0) {
 
-for(let r2=sr;r2<sr+3;r2++)
-for(let c2=sc;c2<sc+3;c2++)
-if(g[r2][c2]==n)return false;
+    let row = Math.floor(Math.random() * 9);
+    let col = Math.floor(Math.random() * 9);
 
-return true;
-}
-
-function solve(){
-
-for(let r=0;r<9;r++){
-for(let c=0;c<9;c++){
-
-if(g[r][c]==0){
-
-let nums=shuffle([1,2,3,4,5,6,7,8,9]);
-
-for(let n of nums){
-
-if(valid(r,c,n)){
-g[r][c]=n;
-
-if(solve())return true;
-
-g[r][c]=0;
+    if (puzzle[row][col] !== 0) {
+      puzzle[row][col] = 0;
+      removed--;
+    }
+  }
 }
 
+function createBoard() {
+
+  const board = document.getElementById("sudoku");
+  board.innerHTML = "";
+
+  for (let row = 0; row < 9; row++) {
+
+    for (let col = 0; col < 9; col++) {
+
+      const cell = document.createElement("div");
+
+      cell.className = "cell";
+
+      cell.dataset.row = row;
+      cell.dataset.col = col;
+
+      if (puzzle[row][col] !== 0) {
+
+        cell.textContent = puzzle[row][col];
+        cell.classList.add("fixed");
+
+      } else {
+
+        cell.addEventListener("click", function() {
+
+          document.querySelectorAll(".cell")
+            .forEach(c => c.classList.remove("selected"));
+
+          cell.classList.add("selected");
+
+          selectedCell = cell;
+
+        });
+
+      }
+
+      board.appendChild(cell);
+    }
+  }
 }
 
-return false;
-}
-}
-}
+function selectNumber(number) {
 
-return true;
-}
+  if (!selectedCell) {
+    document.getElementById("message").textContent =
+      "Please select an empty cell first.";
+    return;
+  }
 
-solve();
-return g;
-}
+  const row = Number(selectedCell.dataset.row);
+  const col = Number(selectedCell.dataset.col);
 
-function newGame(){
+  selectedCell.textContent = number;
 
-clearInterval(timer);
+  puzzle[row][col] = number;
 
-solution=makeSolution();
-puzzle=solution.map(r=>[...r]);
-
-let difficulty=document.getElementById("difficulty").value;
-
-let remove=difficulty=="easy"?38:
-difficulty=="medium"?48:55;
-
-let cells=[];
-
-for(let r=0;r<9;r++)
-for(let c=0;c<9;c++)
-cells.push([r,c]);
-
-shuffle(cells);
-
-for(let i=0;i<remove;i++)
-puzzle[cells[i][0]][cells[i][1]]=0;
-
-original=puzzle.map(r=>[...r]);
-
-mistakes=0;
-time=0;
-selected=null;
-
-document.getElementById("mistakes").textContent=0;
-document.getElementById("message").textContent="";
-draw();
-startTimer();
+  document.getElementById("message").textContent = "";
 }
 
-function draw(){
+function clearCell() {
 
-let board=document.getElementById("board");
-board.innerHTML="";
+  if (!selectedCell) return;
 
-for(let r=0;r<9;r++){
-for(let c=0;c<9;c++){
+  const row = Number(selectedCell.dataset.row);
+  const col = Number(selectedCell.dataset.col);
 
-let cell=document.createElement("div");
-cell.className="cell";
+  if (!selectedCell.classList.contains("fixed")) {
 
-if(puzzle[r][c]){
-cell.textContent=puzzle[r][c];
-cell.classList.add("fixed");
+    selectedCell.textContent = "";
+    puzzle[row][col] = 0;
+
+  }
 }
 
-cell.onclick=()=>select(r,c);
+function checkGame() {
 
-board.appendChild(cell);
-}
-}
-}
+  let complete = true;
 
-function select(r,c){
+  for (let row = 0; row < 9; row++) {
 
-if(original[r][c])return;
+    for (let col = 0; col < 9; col++) {
 
-selected=[r,c];
+      if (puzzle[row][col] !== solution[row][col]) {
+        complete = false;
+      }
 
-document.querySelectorAll(".cell")
-.forEach(x=>x.classList.remove("selected"));
+    }
+  }
 
-document.querySelectorAll(".cell")[r*9+c]
-.classList.add("selected");
-}
+  const message = document.getElementById("message");
 
-function put(n){
+  if (complete) {
 
-if(!selected)return;
+    message.textContent = "🎉 Congratulations! Sudoku solved!";
 
-let r=selected[0];
-let c=selected[1];
+  } else {
 
-if(original[r][c])return;
+    message.textContent =
+      "Keep going! Some numbers are incorrect or missing.";
 
-let cell=document.querySelectorAll(".cell")[r*9+c];
-
-if(n==solution[r][c]){
-
-puzzle[r][c]=n;
-cell.textContent=n;
-cell.classList.remove("error");
-
-win();
-
-}else{
-
-mistakes++;
-document.getElementById("mistakes").textContent=mistakes;
-cell.classList.add("error");
-
-if(mistakes>=3){
-document.getElementById("message").textContent="Game Over!";
-clearInterval(timer);
-}
-}
+  }
 }
 
-function win(){
+function newGame() {
 
-for(let r=0;r<9;r++)
-for(let c=0;c<9;c++)
-if(puzzle[r][c]!=solution[r][c])return;
+  selectedCell = null;
 
-clearInterval(timer);
-document.getElementById("message").textContent=
-"🎉 Congratulations! You completed Sudoku!";
-}
+  document.getElementById("message").textContent = "";
 
-function resetGame(){
+  generateSudoku();
 
-puzzle=original.map(r=>[...r]);
-mistakes=0;
-time=0;
-
-document.getElementById("mistakes").textContent=0;
-document.getElementById("message").textContent="";
-
-draw();
-startTimer();
-}
-
-function checkGame(){
-
-for(let r=0;r<9;r++)
-for(let c=0;c<9;c++)
-if(puzzle[r][c]!=0 && puzzle[r][c]!=solution[r][c]){
-document.getElementById("message").textContent=
-"❌ Some numbers are incorrect.";
-return;
-}
-
-document.getElementById("message").textContent=
-"👍 Everything is correct so far!";
-}
-
-function startTimer(){
-
-clearInterval(timer);
-
-timer=setInterval(()=>{
-
-time++;
-
-let m=Math.floor(time/60);
-let s=time%60;
-
-document.getElementById("timer").textContent=
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0");
-
-},1000);
+  createBoard();
 }
 
 newGame();
